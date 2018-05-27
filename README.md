@@ -3,7 +3,7 @@ A synapse extension to provide routes for accessing profile information of given
 
 # Install
 
-* In the same virtualenv as synapse: `pip install https://github.com/t2bot/synapse-public-profile-api/tarball/master`
+In the same virtualenv as synapse: `pip install https://github.com/t2bot/synapse-public-profile-api/tarball/master`
 
 # Usage
 
@@ -22,8 +22,8 @@ listeners:
       - names: ['federation']
         compress: false
     additional_resources:
-      "/_matrix/t2bot/profile/(?P<user_id>[^/]*)/(?P<property>.*)":
-        module: synapse_public_profile_api.ProfileRequestHandler
+      "/_matrix/t2bot/user_profile":
+        module: synapse-public-profile-api.ProfileRequestHandler
         config:
           # The users that are allowed to be exposed from this API. Must belong to your server.
           allowed_users: ['@travis:t2l.io']
