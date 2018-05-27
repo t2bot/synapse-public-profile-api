@@ -6,9 +6,8 @@ class ProfileRequestHandler(object):
         self._config = config
         self._module_api = module_api
 
-    @defer.inlineCallbacks
     def handle_request(self, request):
-        defer.returnValue((200, {"config": self._config}))
+        return 200, {"config": self._config}
 
     @staticmethod
     def parse_config(config):
