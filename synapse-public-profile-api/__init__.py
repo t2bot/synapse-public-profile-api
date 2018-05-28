@@ -8,7 +8,8 @@ class ProfileRequestHandler(object):
 
     def handle_request(self, request):
         request.responseHeaders.addRawHeader(b"content-type", b"application/json")
-        return json.dumps({"config": self._config})
+        request.write(json.dumps({"config", self._config}))
+        request.finish()
 
     @staticmethod
     def parse_config(config):
