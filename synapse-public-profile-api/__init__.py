@@ -1,4 +1,4 @@
-from twisted.internet import defer
+import json
 
 
 class ProfileRequestHandler(object):
@@ -7,7 +7,8 @@ class ProfileRequestHandler(object):
         self._module_api = module_api
 
     def handle_request(self, request):
-        return 200, {"config": self._config}
+        request.responseHeaders.addRawHeader(b"content-type", b"application/json")
+        return json.dumps({"config": self._config})
 
     @staticmethod
     def parse_config(config):
