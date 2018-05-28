@@ -28,3 +28,6 @@ listeners:
           # The users that are allowed to be exposed from this API. Must belong to your server.
           allowed_users: ['@travis:t2l.io']
 ```
+
+After restarting synapse, make a request to `https://your.domain.com/_matrix/t2bot/user_profile?user_id=@your.user:domain.com`
+to get the profile. No authentication is required.
