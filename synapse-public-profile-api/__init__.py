@@ -1,11 +1,14 @@
 import json
 
+from twisted.internet import defer
+
 
 class ProfileRequestHandler(object):
     def __init__(self, config, module_api):
         self._config = config
         self._module_api = module_api
 
+    @defer.inlineCallbacks
     def handle_request(self, request):
         request.responseHeaders.addRawHeader(b"content-type", b"application/json")
         if 'user_id' not in request.args or len(request.args['user_id']) != 1:
