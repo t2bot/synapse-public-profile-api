@@ -10,6 +10,7 @@ class ProfileRequestHandler(object):
 
     @defer.inlineCallbacks
     def handle_request(self, request):
+        request.responseHeaders.addRawHeader(b"access-control-allow-origin", b"*")
         request.responseHeaders.addRawHeader(b"content-type", b"application/json")
         if 'user_id' not in request.args or len(request.args['user_id']) != 1:
             request.setResponseCode(400)
