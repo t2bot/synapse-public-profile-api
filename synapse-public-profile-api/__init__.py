@@ -8,11 +8,12 @@ class ProfileRequestHandler(object):
 
     def handle_request(self, request):
         request.responseHeaders.addRawHeader(b"content-type", b"application/json")
-        if 'user_id' not in request.args:
+        if 'user_id' not in request.args or len(request.args['user_id']) != 1:
             request.setResponseCode(400)
             request.write('{"errcode":"M_BAD_REQUEST","error":"Missing user_id query param"}')
         else:
-            request.write(request.args['user_id'])
+            user_id = request.args['user_id'][0]
+            request.write(user_id)
         request.finish()
 
     @staticmethod
