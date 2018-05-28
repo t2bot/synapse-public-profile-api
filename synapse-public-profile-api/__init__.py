@@ -20,7 +20,7 @@ class ProfileRequestHandler(object):
                 request.setResponseCode(400)
                 request.write('{"errcode":"IO.T2BOT.PROFILE_BAD_REQUEST","error":"That user is not allowed"}')
             else:
-                profile = self._module_api.hs.get_profile_handler().get_profile(user_id)
+                profile = yield self._module_api.hs.get_profile_handler().get_profile(user_id)
                 request.write(json.dumps(profile))
         request.finish()
 
