@@ -8,7 +8,11 @@ class ProfileRequestHandler(object):
 
     def handle_request(self, request):
         request.responseHeaders.addRawHeader(b"content-type", b"application/json")
-        request.write(json.dumps({"config", self._config}))
+        if request.args.user_id is None:
+            request.setResponseCode(400)
+            request.write('{"errcode":"M_BAD_REQUEST","error":"Missing user_id query param"}')
+        else:
+            request.write(request.args.user_id)
         request.finish()
 
     @staticmethod
