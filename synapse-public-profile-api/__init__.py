@@ -13,15 +13,20 @@ class ProfileRequestHandler(object):
         request.responseHeaders.addRawHeader(b"content-type", b"application/json")
         if 'user_id' not in request.args or len(request.args['user_id']) != 1:
             request.setResponseCode(400)
-            request.write('{"errcode":"IO.T2BOT.PROFILE_BAD_REQUEST","error":"Missing user_id query param"}')
+            request.write('{"errcode":"IO.T2BOT.PROFILE_MISSING_USER_ID","error":"Missing user_id query param"}')
         else:
             user_id = request.args['user_id'][0]
             if user_id not in self._config["allowed_users"]:
                 request.setResponseCode(400)
-                request.write('{"errcode":"IO.T2BOT.PROFILE_BAD_REQUEST","error":"That user is not allowed"}')
+                request.write('{"errcode":"IO.T2BOT.PROFILE_USER_BLACKLISTED","error":"That user is not allowed"}')
             else:
-                profile = yield self._module_api.hs.get_profile_handler().get_profile(user_id)
-                request.write(json.dumps(profile))
+                hs_name = self._module_api.hs.config.server_name
+                if not user_id.endswith(":" + hs_name):
+                    request.setResponseCode(400)
+                    request.write('{"errcode":"IO.T2BOT.PROFILE_WRONG_DOMAIN","error":"That user is not allowed"}')
+                else:
+                    profile = yield self._module_api.hs.get_profile_handler().get_profile(user_id)
+                    request.write(json.dumps(profile))
         request.finish()
 
     @staticmethod
