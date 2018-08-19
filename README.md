@@ -1,4 +1,4 @@
-# synapse-plugin-relate-groups
+# synapse-public-profile-api
 A synapse extension to provide routes for accessing profile information of given users publicly. For help setting this up, please visit [#help:t2bot.io](https://matrix.to/#/#help:t2bot.io).
 
 # Install
